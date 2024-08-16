@@ -32,7 +32,7 @@ const TwitterPage = () => {
 
     try {
       const response = await fetch('https://api.twitter.com/2/tweets', {
-        mode: 'no-cors',
+       
         method: 'POST',
         body: JSON.stringify({
           text: message, // Correct field for Twitter API v2
