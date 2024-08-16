@@ -17,7 +17,7 @@ const TwitterPage = () => {
       if (credential) {
         console.log('Credential:', credential); // Log credentials to debug
         setUser(auth.currentUser);
-        setAccessToken(credential.accessToken); // Set access token
+        setAccessToken(credential.accessToken ?? null); // Set access token, default to null if undefined
       }
     } catch (error) {
       console.error('Error during Twitter sign-in:', error);
