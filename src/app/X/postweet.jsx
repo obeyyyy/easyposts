@@ -10,7 +10,7 @@ export async function POST(request) {
     }
 
     // Call Twitter API to post the tweet
-    const twitterResponse = await fetch('https://api.twitter.com/2/tweets', {
+    const twitterResponse = await fetch('https://api.x.com/2/tweets', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
