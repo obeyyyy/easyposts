@@ -29,23 +29,22 @@ const TwitterPage = () => {
       console.error('No access token found.');
       return;
     }
-
+  
     try {
-      const response = await fetch('https://api.twitter.com/2/tweets', {
-       
+      const response = await fetch('/X/postweet', {
         method: 'POST',
-        body: JSON.stringify({
-          text: message, // Correct field for Twitter API v2
-        }),
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`, // Use Bearer token
         },
+        body: JSON.stringify({
+          accessToken,
+          message,
+        }),
       });
-
+  
       const data = await response.json();
-      if (data.data && data.data.id) {
-        console.log('Tweet posted successfully with ID:', data.data.id);
+      if (response.ok) {
+        console.log('Tweet posted successfully:', data);
       } else {
         console.error('Error posting tweet:', data);
       }
