@@ -31,7 +31,7 @@ const TwitterPage = () => {
       return;
     }
     try {
-      const response = await fetch('/X/postweet', {
+      const response = await fetch('./postweet.jsx', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
