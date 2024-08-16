@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/src/app/firebase.tsx
+
 /.pnp
 .pnp.js
 .yarn/install-state.gz
