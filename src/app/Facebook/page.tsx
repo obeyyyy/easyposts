@@ -41,7 +41,7 @@ const FacebookPage = () => {
     }
   };
 
-  const postToFacebookPage = async (pageToken, message) => {
+  const postToFacebookPage = async (pageToken: any, message: string) => {
     try {
       const response = await fetch(`https://graph.facebook.com/{page-id}/feed`, {
         method: 'POST',
