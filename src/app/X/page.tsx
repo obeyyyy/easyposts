@@ -1,3 +1,4 @@
+// src/app/X/pages.tsx
 "use client";
 import React, { useState } from 'react';
 import { getAuth, signInWithPopup, OAuthProvider } from 'firebase/auth';
@@ -7,10 +8,11 @@ const TwitterPage = () => {
   const [user, setUser] = useState<any>(null);
   const [message, setMessage] = useState('');
   const [accessToken, setAccessToken] = useState<string | null>(null);
+
   const signInWithTwitter = async () => {
-  const provider = new OAuthProvider('twitter.com');
+    const provider = new OAuthProvider('twitter.com');
     
-  try {
+    try {
       const result = await signInWithPopup(auth, provider);
       const credential = OAuthProvider.credentialFromResult(result);
 
@@ -24,12 +26,12 @@ const TwitterPage = () => {
     }
   };
 
-
   const postToTwitter = async (message: string) => {
     if (!accessToken) {
       console.error('No access token found.');
       return;
     }
+
     try {
       const response = await fetch('/X/postweet', {
         method: 'POST',
@@ -41,17 +43,21 @@ const TwitterPage = () => {
           message,
         }),
       });
-      const data = await response.json();
+
+      const responseBody = await response.text(); // Get raw response for debugging
+
+      console.log('Response from /X/postweet:', responseBody); // Log response body
+
       if (response.ok) {
+        const data = JSON.parse(responseBody);
         console.log('Tweet posted successfully:', data);
       } else {
-        console.error('Error posting tweet:', data.error);
+        console.error('Error posting tweet:', responseBody);
       }
     } catch (error) {
       console.error('Error posting to Twitter:', error);
     }
   };
-  
 
   const postMessage = async () => {
     if (message) {

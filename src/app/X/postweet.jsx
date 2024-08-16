@@ -4,7 +4,9 @@ import { NextResponse } from 'next/server';
 export async function POST(request) {
   try {
     const { accessToken, message } = await request.json();
-    
+
+    console.log('Received data:', { accessToken, message }); // Log received data
+
     if (!accessToken || !message) {
       return NextResponse.json({ error: 'Missing accessToken or message' }, { status: 400 });
     }
@@ -19,15 +21,19 @@ export async function POST(request) {
       body: JSON.stringify({ text: message }),
     });
 
+    const responseBody = await twitterResponse.text(); // Get raw response for debugging
+
+    console.log('Twitter API response:', responseBody); // Log response body
+
     if (!twitterResponse.ok) {
-      const errorData = await twitterResponse.json();
-      return NextResponse.json({ error: errorData }, { status: twitterResponse.status });
+      return NextResponse.json({ error: responseBody }, { status: twitterResponse.status });
     }
 
-    const twitterData = await twitterResponse.json();
+    const twitterData = JSON.parse(responseBody); // Parse response if necessary
     return NextResponse.json(twitterData);
 
   } catch (error) {
+    console.error('Error in API route:', error); // Log errors
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
