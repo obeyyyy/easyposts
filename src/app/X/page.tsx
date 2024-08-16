@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import { getAuth, signInWithPopup, OAuthProvider } from 'firebase/auth';
 import { auth } from '../firebase'; // Ensure the correct path
