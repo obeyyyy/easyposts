@@ -2,7 +2,7 @@
 import { useRouter} from "next/navigation";
 import { useState } from 'react'
 import './login.css'
-import { BrowserRouter as Routers, Routes , Route, Navigate, Await } from 'react-router-dom'
+import { BrowserRouter as Await } from 'react-router-dom'
 import HomePage from '../page'
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import {auth}  from '../firebase'
