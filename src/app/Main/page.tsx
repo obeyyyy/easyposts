@@ -11,6 +11,7 @@ export default function Home() {
 
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user); // User is signed in
@@ -20,7 +21,9 @@ export default function Home() {
     });
 
     return () => unsubscribe(); // Clean up subscription
-  }, [router]);
+  }
+}
+, [router]);
 
   if (user) {
     return (

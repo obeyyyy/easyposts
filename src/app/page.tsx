@@ -1,7 +1,8 @@
-"use client"
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import {auth} from "../app/firebase";
+import { auth } from "../app/firebase"; // Ensure this path is correct
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -9,26 +10,31 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        router.push('/Main')
-        
-      } else {
-        router.push('/login'); // Redirect to login if not logged in
-      }
-    });
+    if (typeof window !== "undefined") {
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setUser(user);
+          router.push('/Main');
+        } else {
+          router.push('/login'); // Redirect to login if not logged in
+        }
+      });
 
-    return () => unsubscribe();
+      return () => unsubscribe(); // Cleanup subscription on unmount
+    }
   }, [router]);
 
-  if (user) {
+  if (!user) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div><h2>Welcome {user.email}</h2></div>
+        <div>Loading...</div> {/* Show loading state while checking auth status */}
       </main>
     );
   }
 
-  return null; // Return nothing if user state is not yet determined
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <div><h2>Welcome {user.email}</h2></div>
+    </main>
+  );
 }

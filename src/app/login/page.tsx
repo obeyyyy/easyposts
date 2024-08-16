@@ -1,6 +1,7 @@
-"use client"
+"use client";
+
 import { useRouter } from "next/navigation";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './login.css';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth}  from '../firebase';
@@ -13,6 +14,8 @@ function Login() {
   const [passwordError, setPasswordError] = useState("");
 
   const router = useRouter(); // router for navigation
+
+  
 
   const Logged_in = () => {
     setEmailError("");

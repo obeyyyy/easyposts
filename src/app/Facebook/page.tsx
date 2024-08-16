@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import React, { useState } from 'react';
 import { getAuth, FacebookAuthProvider, signInWithPopup} from 'firebase/auth';
 import { auth } from '../firebase';

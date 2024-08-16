@@ -1,8 +1,9 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react";
-import FacebookPage from "../Facebook/page"
+import React, { useState } from "react";
+import FacebookPage from "../Facebook/page";
 import TwitterPage from "../X/page";
+
 export default function Settings() {
   const [selectedSection, setSelectedSection] = useState("Account");
 
@@ -17,7 +18,7 @@ export default function Settings() {
       case "X":
         return <div><TwitterPage /></div>;
       case "Facebook":
-        return<div> <FacebookPage /> </div>;
+        return <div><FacebookPage /></div>;
       default:
         return <div>Select a section</div>;
     }
@@ -45,7 +46,7 @@ export default function Settings() {
             className={`p-2 cursor-pointer ${selectedSection === "X" ? "bg-gray-700" : ""}`}
             onClick={() => setSelectedSection("X")}
           >
-            X (twitter)
+            X (Twitter)
           </li>
           <li
             className={`p-2 cursor-pointer ${selectedSection === "Privacy" ? "bg-gray-700" : ""}`}

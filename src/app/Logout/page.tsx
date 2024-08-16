@@ -1,5 +1,6 @@
-"use client"
-import React from "react";
+"use client";
+
+
 import { signOut } from "firebase/auth";
 import {auth} from "../firebase"
 import { useRouter } from "next/navigation";

@@ -1,9 +1,10 @@
-"use client"
+"use client";
+
 import { useRouter} from "next/navigation";
 import { useState } from 'react'
 import './login.css'
 import { BrowserRouter as Await } from 'react-router-dom'
-import HomePage from '../page'
+
 import {createUserWithEmailAndPassword } from "firebase/auth";
 import {auth}  from '../firebase'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
