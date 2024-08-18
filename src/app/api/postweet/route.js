@@ -9,24 +9,35 @@ const client = new TwitterLite({
   access_token_secret: 'ZIlKkOeFzkVUjzKCdOLd1tGEuOOPTjcgi0OgY4L5hlFf6'
 });
 
-export async function POST(request: Request) {
+
+export async function POST(req, res) {
   try {
-    const { message } = await request.json();
+    const { message } = await req.json();
 
     if (!message) {
-      return NextResponse.json({ error: 'Message is missing' }, { status: 400 });
+      return res.status(400).json({ error: 'Message is missing' });
     }
 
+    // Post the tweet
     const twitterResponse = await client.post('statuses/update', { status: message });
 
-    if (twitterResponse) {
-      return NextResponse.json(twitterResponse);
+    // Check if response is valid
+    if (twitterResponse && twitterResponse.text) {
+      return res.status(200).json(twitterResponse);
     } else {
-      return NextResponse.json({ error: 'Failed to post tweet' }, { status: 500 });
+      return res.status(500).json({ error: 'Failed to post tweet' });
     }
 
   } catch (error) {
+    // Log detailed error
     console.error('Error in API route:', error);
-    return NextResponse.json({ error: error}, { status: 500 });
+
+    // Return detailed error message
+    return res.status(500).json({
+      error: {
+        message: error.message,
+        stack: error.stack
+      }
+    });
   }
 }
