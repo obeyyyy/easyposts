@@ -1,15 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    basePath: '',
-    async rewrites() {
-      return [
-        {
-          source: '/api/:path*',
-          destination: `https://easyposts-oubayes-projects.vercel.app/X`, // Adjust to match your backend server URL
-        },
-      ];
-    },
-  };
-  
-  export default nextConfig;
-  
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: '/X/:path*', // Adjust this to the correct internal API route
+      },
+    ];
+  },
+};
+
+export default nextConfig;
