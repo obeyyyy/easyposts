@@ -1,5 +1,5 @@
 // src/app/X/postweet.jsx
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import TwitterLite  from 'twitter-lite';
 
 const client = new TwitterLite({
@@ -9,13 +9,12 @@ const client = new TwitterLite({
   access_token_secret: 'ZIlKkOeFzkVUjzKCdOLd1tGEuOOPTjcgi0OgY4L5hlFf6'
 });
 
-
-export async function POST(req, res) {
+export async function POST(request: NextRequest) {
   try {
-    const { message } = await req.json();
+    const { message } = await request.json();
 
     if (!message) {
-      return res.status(400).json({ error: 'Message is missing' });
+      return NextResponse.json({ error: 'Message is missing' }, { status: 400 });
     }
 
     // Post the tweet
@@ -23,9 +22,9 @@ export async function POST(req, res) {
 
     // Check if response is valid
     if (twitterResponse && twitterResponse.text) {
-      return res.status(200).json(twitterResponse);
+      return NextResponse.json(twitterResponse);
     } else {
-      return res.status(500).json({ error: 'Failed to post tweet' });
+      return NextResponse.json({ error: 'Failed to post tweet' }, { status: 500 });
     }
 
   } catch (error) {
@@ -33,11 +32,11 @@ export async function POST(req, res) {
     console.error('Error in API route:', error);
 
     // Return detailed error message
-    return res.status(500).json({
+    return NextResponse.json({
       error: {
-        message: error.message,
-        stack: error.stack
+        message: (error as Error).message,
+        stack: (error as Error).stack
       }
-    });
+    }, { status: 500 });
   }
 }
