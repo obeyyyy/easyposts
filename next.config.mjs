@@ -5,7 +5,7 @@ const nextConfig = {
       return [
         {
           source: '/api/:path*',
-          destination: `http://localhost:3000/api/:path*`, // Adjust to match your backend server URL
+          destination: `https://easyposts-oubayes-projects.vercel.app/X`, // Adjust to match your backend server URL
         },
       ];
     },
