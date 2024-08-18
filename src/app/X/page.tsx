@@ -30,15 +30,14 @@ const TwitterPage = () => {
       console.error('Access token or message is missing.');
       return;
     }
-
+  
     try {
-      const response = await fetch('https://api.twitter.com/2/tweets', {
+      const response = await fetch('/api/postweet', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ text: message }),
+        body: JSON.stringify({ accessToken, message }),
       });
   
       if (response.ok) {
@@ -51,6 +50,7 @@ const TwitterPage = () => {
       console.error('Error:', error);
     }
   };
+  
 
   return (
     <div>
