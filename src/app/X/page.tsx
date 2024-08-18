@@ -33,7 +33,7 @@ const TwitterPage = () => {
     }
 
     try {
-      const response = await fetch('/X/postweet', {
+      const response = await fetch('/api/postweet', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
