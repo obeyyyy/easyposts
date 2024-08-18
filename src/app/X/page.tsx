@@ -1,4 +1,3 @@
-// src/app/X/pages.tsx
 "use client";
 import React, { useState } from 'react';
 import { getAuth, signInWithPopup, OAuthProvider } from 'firebase/auth';
@@ -26,42 +25,30 @@ const TwitterPage = () => {
     }
   };
 
-  const postToTwitter = async (message: string) => {
-    if (!accessToken) {
-      console.error('No access token found.');
+  const postToTwitter = async () => {
+    if (!accessToken || !message) {
+      console.error('Access token or message is missing.');
       return;
     }
 
     try {
-      const response = await fetch('/api/postweet', {
+      const response = await fetch('https://api.twitter.com/2/tweets', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({
-          accessToken,
-          message,
-        }),
+        body: JSON.stringify({ text: message }),
       });
-
-      const responseBody = await response.text(); // Get raw response for debugging
-
-      console.log('Response from /X/postweet:', responseBody); // Log response body
-
+  
       if (response.ok) {
-        const data = JSON.parse(responseBody);
+        const data = await response.json();
         console.log('Tweet posted successfully:', data);
       } else {
-        console.error('Error posting tweet:', responseBody);
+        console.error('Error posting tweet:', await response.text());
       }
     } catch (error) {
-      console.error('Error posting to Twitter:', error);
-    }
-  };
-
-  const postMessage = async () => {
-    if (message) {
-      await postToTwitter(message);
+      console.error('Error:', error);
     }
   };
 
@@ -75,7 +62,7 @@ const TwitterPage = () => {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Type your message here"
           />
-          <button onClick={postMessage}>Post to Twitter</button>
+          <button onClick={postToTwitter}>Post to Twitter</button>
           <button onClick={() => auth.signOut()}>Sign Out</button>
         </div>
       ) : (
